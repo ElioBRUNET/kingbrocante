@@ -4,7 +4,7 @@ import sitemap from "@astrojs/sitemap";
 
 // TODO: confirm the final production domain and update this before launch
 // (also update src/data/business.ts -> productionDomain to match).
-const SITE_URL = "https://www.king-brocante.ch";
+const SITE_URL = "https://kingbrocante.ch";
 
 // https://astro.build/config
 export default defineConfig({

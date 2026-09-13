@@ -49,7 +49,7 @@ export const business = {
   ],
 
   // TODO: confirm final production domain and update this + astro.config.mjs "site".
-  productionDomain: "https://www.king-brocante.ch",
+  productionDomain: "https://kingbrocante.ch",
 
   kingCleaningUrl: "https://kingcleaning.ch/",
 
