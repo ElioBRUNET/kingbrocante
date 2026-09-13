@@ -1,0 +1,61 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PageIntro from "../components/PageIntro.astro";
+import { breadcrumbSchema } from "../lib/schema";
+import { business } from "../data/business";
+
+const crumbs = [
+  { name: "Accueil", path: "/" },
+  { name: "Mentions légales", path: "/mentions-legales" },
+];
+---
+
+<BaseLayout
+  title="Mentions légales"
+  description="Mentions légales du site King Brocante."
+  path="/mentions-legales"
+  noindex
+  structuredData={breadcrumbSchema(crumbs)}
+>
+  <PageIntro title="Mentions légales" crumbs={crumbs} />
+
+  <section class="section">
+    <div class="container container-prose">
+      <p class="text-lead">
+        Les informations légales définitives (raison sociale exacte, numéro
+        d'identification d'entreprise, hébergeur) restent à confirmer par King
+        Brocante avant publication officielle de cette page.
+      </p>
+
+      <h2>Éditeur du site</h2>
+      <p>{business.legalName}{!business.legalNameConfirmed && " (raison sociale à confirmer)"}</p>
+      <p>{business.streetAddress}, {business.postalCode} {business.city}</p>
+
+      <h2>Contact</h2>
+      {business.email && <p>{business.email}</p>}
+      {business.phone && <p>{business.phone}</p>}
+      {!business.email && !business.phone && (
+        <p>{business.streetAddress}, {business.postalCode} {business.city} — {business.openingHoursDisplay}</p>
+      )}
+
+      <h2>Hébergement</h2>
+      <p>Informations d'hébergement à compléter.</p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .container-prose {
+    max-width: 720px;
+  }
+
+  .container-prose h2 {
+    margin-top: var(--space-7);
+    margin-bottom: var(--space-3);
+    font-size: var(--fs-lg);
+  }
+
+  .container-prose p {
+    margin-bottom: var(--space-3);
+  }
+</style>

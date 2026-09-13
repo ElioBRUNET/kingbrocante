@@ -1,0 +1,82 @@
+---
+import { Image } from "astro:assets";
+import { business } from "../data/business";
+import Icon from "./Icon.astro";
+import kingCleaningLogo from "../assets/images/logo-king-cleaning.png";
+---
+
+<section class="king-network">
+  <div class="container king-network-inner">
+    <div class="king-network-copy">
+      <p class="eyebrow eyebrow-light">Le réseau King</p>
+      <h2>Besoin également d'un nettoyage complet ?</h2>
+      <p class="text-lead">
+        Pour le nettoyage, le facility management et les services associés,
+        retrouvez l'expertise de King Cleaning à Genève et en Suisse romande.
+      </p>
+      <a href={business.kingCleaningUrl} class="btn btn-gold" target="_blank" rel="noopener">
+        Découvrir King Cleaning
+        <Icon name="arrow-right" size={18} />
+      </a>
+    </div>
+    <div class="king-network-mark">
+      <Image src={kingCleaningLogo} alt="King Cleaning SARL" width={220} height={99} />
+    </div>
+  </div>
+</section>
+
+<style>
+  .king-network {
+    background: var(--color-green-900);
+    color: var(--color-on-dark);
+  }
+
+  .king-network-inner {
+    padding-block: var(--space-9);
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-6);
+    align-items: center;
+  }
+
+  @media (min-width: 900px) {
+    .king-network-inner {
+      grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.7fr);
+    }
+  }
+
+  .eyebrow-light {
+    color: var(--color-gold);
+  }
+
+  .king-network-copy h2 {
+    color: var(--color-on-dark);
+    margin-block: var(--space-3) var(--space-4);
+  }
+
+  .king-network-copy .text-lead {
+    color: var(--color-on-dark-muted);
+    max-width: 48ch;
+    margin-bottom: var(--space-6);
+  }
+
+  .king-network-mark {
+    display: none;
+    justify-content: flex-end;
+  }
+
+  .king-network-mark :global(img) {
+    max-width: 220px;
+    height: auto;
+    /* Source logo is gold/brown on a transparent background; recolor it
+       white so it reads cleanly on the dark green section instead of
+       needing a white card behind it. */
+    filter: brightness(0) invert(1);
+  }
+
+  @media (min-width: 900px) {
+    .king-network-mark {
+      display: flex;
+    }
+  }
+</style>

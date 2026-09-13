@@ -1,0 +1,93 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PageIntro from "../components/PageIntro.astro";
+import SectionHeading from "../components/SectionHeading.astro";
+import PillarList from "../components/PillarList.astro";
+import KingNetworkBanner from "../components/KingNetworkBanner.astro";
+import CTASection from "../components/CTASection.astro";
+import { breadcrumbSchema } from "../lib/schema";
+
+const crumbs = [
+  { name: "Accueil", path: "/" },
+  { name: "À propos", path: "/a-propos" },
+];
+
+const pillars = [
+  {
+    icon: "compass" as const,
+    title: "Expertise",
+    text: "Un regard attentif porté sur le mobilier, les bijoux, les montres, l'argenterie, les tableaux et les objets anciens.",
+  },
+  {
+    icon: "map-pin" as const,
+    title: "Service local",
+    text: "Une présence à Genève, proche des personnes et de leurs objets.",
+  },
+  {
+    icon: "shield" as const,
+    title: "Transparence",
+    text: "Une démarche expliquée simplement, sans jargon ni promesse infondée.",
+  },
+  {
+    icon: "sparkles" as const,
+    title: "Seconde vie responsable",
+    text: "Aider chaque objet à trouver la suite la plus adaptée, plutôt que de le voir disparaître.",
+  },
+];
+---
+
+<BaseLayout
+  title="À propos de King Brocante"
+  description="King Brocante accompagne l'estimation et la valorisation d'objets à Genève, avec une approche transparente et respectueuse, au sein de l'écosystème King."
+  path="/a-propos"
+  structuredData={breadcrumbSchema(crumbs)}
+>
+  <PageIntro
+    eyebrow="Notre philosophie"
+    title="À propos de King Brocante"
+    lead="King Brocante est né d'une conviction simple : chaque objet mérite d'être regardé avec attention avant de décider de son avenir."
+    crumbs={crumbs}
+  />
+
+  <section class="section">
+    <div class="container container-prose">
+      <SectionHeading eyebrow="Notre rôle" title="Estimer, expliquer, accompagner" />
+      <p class="text-lead">
+        Nous ne sommes pas là pour vous pousser à vendre. Notre rôle est d'identifier
+        ce que vous possédez, de vous expliquer clairement ses caractéristiques et de
+        vous accompagner vers la solution la plus adaptée : conservation, valorisation,
+        don ou seconde vie.
+      </p>
+      <p class="text-lead">
+        Cette approche s'applique aussi bien à un objet isolé qu'à l'ensemble d'un
+        logement à trier, par exemple dans le cadre d'un débarras ou d'une succession.
+      </p>
+    </div>
+  </section>
+
+  <section class="section section-alt">
+    <div class="container">
+      <SectionHeading eyebrow="Nos valeurs" title="Ce qui guide notre travail" />
+      <PillarList pillars={pillars} />
+    </div>
+  </section>
+
+  <KingNetworkBanner />
+
+  <CTASection
+    title="Une question, un objet à faire estimer ?"
+    text="Parlons de votre situation — King Brocante vous répond simplement."
+    ctaLabel="Nous contacter →"
+    ctaHref="/contact"
+  />
+</BaseLayout>
+
+<style>
+  .container-prose {
+    max-width: 760px;
+  }
+
+  .container-prose .text-lead {
+    margin-bottom: var(--space-4);
+  }
+</style>

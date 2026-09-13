@@ -1,0 +1,57 @@
+---
+type Crumb = { name: string; path: string };
+
+type Props = {
+  items: Crumb[];
+};
+
+const { items } = Astro.props;
+---
+
+<nav class="breadcrumbs" aria-label="Fil d'Ariane">
+  <ol>
+    {items.map((item, index) => (
+      <li>
+        {index < items.length - 1 ? (
+          <a href={item.path}>{item.name}</a>
+        ) : (
+          <span aria-current="page">{item.name}</span>
+        )}
+        {index < items.length - 1 && <span class="sep" aria-hidden="true">/</span>}
+      </li>
+    ))}
+  </ol>
+</nav>
+
+<style>
+  .breadcrumbs {
+    padding-block: var(--space-4);
+  }
+
+  .breadcrumbs ol {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    font-size: var(--fs-xs);
+    color: var(--color-body-light);
+  }
+
+  .breadcrumbs li {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+  }
+
+  .breadcrumbs a:hover {
+    color: var(--color-green);
+  }
+
+  .breadcrumbs .sep {
+    color: var(--color-border-strong);
+  }
+
+  .breadcrumbs span[aria-current] {
+    color: var(--color-ink);
+    font-weight: var(--fw-semibold);
+  }
+</style>

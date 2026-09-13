@@ -1,0 +1,56 @@
+---
+import { business } from "../data/business";
+import Icon from "./Icon.astro";
+---
+
+<div class="local-areas">
+  <div class="local-areas-list">
+    {business.serviceAreas.map((area) => (
+      <span class="local-area-chip">
+        <Icon name="map-pin" size={16} />
+        {area}
+      </span>
+    ))}
+  </div>
+  <p class="local-areas-note">
+    Vous êtes ailleurs en Suisse romande ? <a href="/contact">Contactez-nous</a>, nous
+    étudions votre situation au cas par cas.
+  </p>
+</div>
+
+<style>
+  .local-areas-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    margin-bottom: var(--space-5);
+  }
+
+  .local-area-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: 0.6rem 1.1rem;
+    border-radius: var(--radius-pill);
+    background: var(--color-white);
+    border: 1px solid var(--color-border);
+    font-size: var(--fs-sm);
+    font-weight: var(--fw-semibold);
+    color: var(--color-ink);
+  }
+
+  .local-area-chip :global(svg) {
+    color: var(--color-gold-700);
+  }
+
+  .local-areas-note {
+    font-size: var(--fs-sm);
+    color: var(--color-body-light);
+  }
+
+  .local-areas-note a {
+    color: var(--color-green);
+    font-weight: var(--fw-semibold);
+    text-decoration: underline;
+  }
+</style>

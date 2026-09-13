@@ -1,0 +1,109 @@
+/*
+  King Brocante — Design Tokens
+  Derived from the King Cleaning visual reference (same KING ecosystem):
+  sampled dark forest green #27433A and gold/ochre #D39947 directly from
+  the reference screenshots, extended into a full coherent scale.
+*/
+
+:root {
+  /* ---- Color: neutrals ---- */
+  --color-white: #ffffff;
+  --color-bg: #ffffff;
+  --color-bg-alt: #faf7f1; /* warm off-white for alternating sections */
+  --color-bg-tint: #f3efe6; /* deeper warm tint for cards on alt bg */
+  --color-border: #e7e1d4;
+  --color-border-strong: #d8cfba;
+
+  /* ---- Color: ink / text ---- */
+  --color-ink: #16181a; /* near-black headings */
+  --color-body: #55564f; /* warm gray body copy */
+  --color-body-light: #85847c;
+  --color-on-dark: #f3f1ea;
+  --color-on-dark-muted: #c3ccc6;
+
+  /* ---- Color: King green ---- */
+  --color-green-900: #172d25;
+  --color-green-800: #1e3830;
+  --color-green: #27433a; /* primary brand green, sampled */
+  --color-green-700: #32544a;
+  --color-green-600: #3d655a;
+  --color-green-tint: #eef3f1; /* faint green background tint */
+
+  /* ---- Color: King gold ---- */
+  --color-gold-900: #8c6620;
+  --color-gold-700: #b9822f;
+  --color-gold: #d39947; /* accent gold, sampled */
+  --color-gold-500: #dda85f;
+  --color-gold-tint: #f8ecd8; /* faint gold background tint */
+  --color-gold-line: #e3c07f;
+
+  /* ---- Semantic ---- */
+  --color-cta-bg: var(--color-green);
+  --color-cta-bg-hover: var(--color-green-700);
+  --color-cta-text: var(--color-white);
+  --color-accent-bg: var(--color-gold);
+  --color-accent-bg-hover: var(--color-gold-700);
+  --color-focus-ring: #1a73e8;
+
+  /* ---- Typography ---- */
+  --font-family: "Plus Jakarta Sans", "Segoe UI", system-ui, -apple-system, sans-serif;
+
+  --fs-xs: 0.8125rem;
+  --fs-sm: 0.9375rem;
+  --fs-base: 1.0625rem;
+  --fs-md: 1.25rem;
+  --fs-lg: 1.5rem;
+  --fs-xl: 1.875rem;
+  --fs-2xl: 2.375rem;
+  --fs-3xl: 3rem;
+  --fs-4xl: 3.75rem;
+
+  --lh-tight: 1.1;
+  --lh-snug: 1.3;
+  --lh-normal: 1.6;
+
+  --fw-regular: 400;
+  --fw-medium: 500;
+  --fw-semibold: 600;
+  --fw-bold: 700;
+  --fw-extrabold: 800;
+
+  /* ---- Spacing scale ---- */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 2.5rem;
+  --space-8: 3rem;
+  --space-9: 4rem;
+  --space-10: 5rem;
+  --space-11: 6.5rem;
+  --space-12: 8rem;
+
+  /* ---- Radius ---- */
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 22px;
+  --radius-xl: 32px;
+  --radius-pill: 999px;
+
+  /* ---- Shadow ---- */
+  --shadow-sm: 0 2px 8px rgba(23, 24, 20, 0.06);
+  --shadow-md: 0 8px 24px rgba(23, 24, 20, 0.08);
+  --shadow-lg: 0 20px 48px rgba(23, 24, 20, 0.12);
+  --shadow-gold: 0 12px 32px rgba(211, 153, 71, 0.28);
+  --shadow-green: 0 12px 32px rgba(39, 67, 58, 0.28);
+
+  /* ---- Layout ---- */
+  --container-width: 1240px;
+  --container-pad: 1.25rem;
+
+  /* ---- Motion ---- */
+  --transition-fast: 150ms ease;
+  --transition-base: 220ms ease;
+
+  /* ---- Breakpoints (reference only, used in media queries directly) ----
+     xs: 375px  sm: 430px  md: 768px  lg: 1024px  xl: 1440px */
+}

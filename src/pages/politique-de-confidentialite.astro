@@ -1,0 +1,68 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PageIntro from "../components/PageIntro.astro";
+import { breadcrumbSchema } from "../lib/schema";
+import { business } from "../data/business";
+
+const crumbs = [
+  { name: "Accueil", path: "/" },
+  { name: "Politique de confidentialité", path: "/politique-de-confidentialite" },
+];
+---
+
+<BaseLayout
+  title="Politique de confidentialité"
+  description="Politique de confidentialité de King Brocante concernant les données transmises via le site, notamment le formulaire d'estimation."
+  path="/politique-de-confidentialite"
+  noindex
+  structuredData={breadcrumbSchema(crumbs)}
+>
+  <PageIntro title="Politique de confidentialité" crumbs={crumbs} />
+
+  <section class="section">
+    <div class="container container-prose">
+      <p class="text-lead">
+        Cette page sera complétée avec la politique de confidentialité définitive de
+        King Brocante. Les éléments ci-dessous sont fournis à titre indicatif et
+        doivent être validés avant publication.
+      </p>
+
+      <h2>Données collectées</h2>
+      <p>
+        Le formulaire d'estimation collecte le nom, le numéro de téléphone, l'adresse
+        email (facultative), le type d'objet, une description ainsi que les photos
+        que vous choisissez de transmettre.
+      </p>
+
+      <h2>Utilisation des données</h2>
+      <p>
+        Le détail du traitement, de la conservation et, le cas échéant, de la
+        transmission de ces données à un prestataire (CRM, messagerie, etc.)
+        sera précisé ici une fois l'intégration technique définitive en place.
+      </p>
+
+      <h2>Contact</h2>
+      <p>
+        Pour toute question relative à vos données, contactez-nous au{" "}
+        {business.streetAddress}, {business.postalCode} {business.city}
+        {business.email && <> ou à {business.email}</>}.
+      </p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .container-prose {
+    max-width: 720px;
+  }
+
+  .container-prose h2 {
+    margin-top: var(--space-7);
+    margin-bottom: var(--space-3);
+    font-size: var(--fs-lg);
+  }
+
+  .container-prose p {
+    margin-bottom: var(--space-3);
+  }
+</style>

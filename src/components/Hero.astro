@@ -1,0 +1,137 @@
+---
+import { Image } from "astro:assets";
+import heroImage from "../assets/images/hero-expert-loupe.jpg";
+import { business } from "../data/business";
+---
+
+<section class="hero">
+  <div class="container hero-grid">
+    <div class="hero-copy">
+      <p class="eyebrow">King Brocante · {business.city}</p>
+      <h1>
+        Estimation &amp; valorisation d'objets<br />
+        à <em>Genève</em>
+      </h1>
+      <p class="hero-lead">
+        Mobilier, bijoux, montres, argenterie, objets anciens ou de collection : King
+        Brocante vous accompagne pour identifier, estimer et donner une seconde vie à
+        vos biens à Genève et alentours.
+      </p>
+      <div class="hero-actions">
+        <a href="/contact#estimation" class="btn btn-primary">{business.primaryCta}</a>
+        <a href="/estimation-valorisation" class="btn btn-outline">{business.secondaryCta}</a>
+      </div>
+    </div>
+
+    <div class="hero-media">
+      <div class="hero-shape-gold" aria-hidden="true"></div>
+      <div class="hero-shape-dot" aria-hidden="true"></div>
+      <Image
+        src={heroImage}
+        alt="Expert examinant un objet ancien à la loupe avant estimation"
+        widths={[400, 700, 900]}
+        sizes="(min-width: 1024px) 520px, 90vw"
+        width={900}
+        height={1000}
+        class="hero-image"
+        loading="eager"
+        fetchpriority="high"
+      />
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    overflow: hidden;
+    padding-block: var(--space-8) var(--space-9);
+  }
+
+  @media (min-width: 1024px) {
+    .hero {
+      padding-block: var(--space-9) var(--space-10);
+    }
+  }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-8);
+    align-items: center;
+  }
+
+  @media (min-width: 1024px) {
+    .hero-grid {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: var(--space-9);
+    }
+  }
+
+  .hero-copy h1 {
+    margin-block: var(--space-4) var(--space-5);
+  }
+
+  .hero-copy .eyebrow {
+    margin-bottom: var(--space-2);
+  }
+
+  .hero-lead {
+    font-size: var(--fs-md);
+    color: var(--color-body);
+    max-width: 42ch;
+    margin-bottom: var(--space-6);
+  }
+
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+  }
+
+  .hero-media {
+    position: relative;
+    display: flex;
+    justify-content: center;
+  }
+
+  .hero-image {
+    width: 100%;
+    max-width: 460px;
+    height: auto;
+    aspect-ratio: 9 / 10;
+    object-fit: cover;
+    object-position: center 30%;
+    border-radius: var(--radius-xl);
+    position: relative;
+    z-index: 1;
+    box-shadow: var(--shadow-lg);
+  }
+
+  .hero-shape-gold {
+    position: absolute;
+    inset: 6% 4% 4% 10%;
+    background: var(--color-gold);
+    border-radius: var(--radius-xl);
+    z-index: 0;
+  }
+
+  .hero-shape-dot {
+    position: absolute;
+    top: -14px;
+    left: 8%;
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: var(--color-gold-tint);
+    border: 2px solid var(--color-gold);
+    z-index: 0;
+    display: none;
+  }
+
+  @media (min-width: 768px) {
+    .hero-shape-dot {
+      display: block;
+    }
+  }
+</style>

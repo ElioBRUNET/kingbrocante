@@ -1,0 +1,421 @@
+---
+import Icon from "./Icon.astro";
+import { homeCategories } from "../data/categories";
+
+type Props = {
+  compact?: boolean;
+};
+
+const { compact = false } = Astro.props;
+const objectTypes = [...homeCategories.map((c) => c.title), "Autre / je ne sais pas"];
+---
+
+<div class:list={["estimation-form-wrap", { compact }]} id="estimation">
+  {!compact && (
+    <div class="estimation-intro">
+      <p class="eyebrow">Faire estimer un objet</p>
+      <h2>Vous avez un objet à faire estimer ?</h2>
+      <p class="text-lead">
+        Envoyez-nous quelques photos. Nous revenons vers vous rapidement avec un
+        premier avis.
+      </p>
+    </div>
+  )}
+
+  <form id="estimation-form" class="estimation-form" novalidate>
+    <div class="form-row">
+      <label for="ef-name">Nom <span aria-hidden="true">*</span></label>
+      <input id="ef-name" name="name" type="text" autocomplete="name" required />
+    </div>
+
+    <div class="form-row form-row-split">
+      <div>
+        <label for="ef-phone">Téléphone <span aria-hidden="true">*</span></label>
+        <input id="ef-phone" name="phone" type="tel" autocomplete="tel" required />
+      </div>
+      <div>
+        <label for="ef-email">Email <span class="optional">(optionnel)</span></label>
+        <input id="ef-email" name="email" type="email" autocomplete="email" />
+      </div>
+    </div>
+
+    <div class="form-row">
+      <label for="ef-object-type">Type d'objet <span aria-hidden="true">*</span></label>
+      <select id="ef-object-type" name="objectType" required>
+        <option value="" disabled selected>Sélectionnez une catégorie</option>
+        {objectTypes.map((type) => (
+          <option value={type}>{type}</option>
+        ))}
+      </select>
+    </div>
+
+    <div class="form-row">
+      <label for="ef-description">Description / informations connues</label>
+      <textarea
+        id="ef-description"
+        name="description"
+        rows="4"
+        placeholder="Ancienneté approximative, provenance, état, dimensions..."
+      ></textarea>
+    </div>
+
+    <div class="form-row">
+      <span id="ef-photos-label" class="field-label">Photos</span>
+      <div class="photo-upload" role="group" aria-labelledby="ef-photos-label">
+        <label for="ef-photos" class="photo-upload-dropzone">
+          <Icon name="camera" size={28} />
+          <span class="photo-upload-title">Ajouter des photos</span>
+          <span class="photo-upload-hint">Prenez une photo ou choisissez-la dans votre galerie</span>
+        </label>
+        <input
+          id="ef-photos"
+          name="photos"
+          type="file"
+          accept="image/*"
+          multiple
+          class="visually-hidden"
+        />
+        <ul id="ef-photo-previews" class="photo-previews" hidden></ul>
+        <p id="ef-photos-error" class="field-error" hidden></p>
+      </div>
+    </div>
+
+    <input
+      type="checkbox"
+      name="botcheck"
+      id="ef-botcheck"
+      class="visually-hidden"
+      tabindex="-1"
+      autocomplete="off"
+    />
+
+    <button type="submit" class="btn btn-primary btn-block" id="ef-submit">
+      <Icon name="upload" size={18} />
+      Envoyer ma demande d'estimation
+    </button>
+
+    <p class="form-reassurance">Simple · Discret · Réponse rapide</p>
+
+    <div id="ef-status" class="form-status" role="status" aria-live="polite" hidden></div>
+  </form>
+</div>
+
+<style>
+  .estimation-form-wrap {
+    max-width: 640px;
+  }
+
+  .estimation-form-wrap.compact {
+    max-width: none;
+  }
+
+  .estimation-intro {
+    margin-bottom: var(--space-6);
+  }
+
+  .estimation-intro h2 {
+    margin-block: var(--space-2) var(--space-3);
+  }
+
+  .estimation-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+    background: var(--color-white);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-6);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .form-row {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .form-row-split {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-5);
+  }
+
+  @media (min-width: 560px) {
+    .form-row-split {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    }
+  }
+
+  label,
+  .field-label {
+    font-size: var(--fs-sm);
+    font-weight: var(--fw-semibold);
+    color: var(--color-ink);
+  }
+
+  label span[aria-hidden],
+  .field-error {
+    color: var(--color-gold-900);
+  }
+
+  .optional {
+    font-weight: var(--fw-regular);
+    color: var(--color-body-light);
+  }
+
+  input:not([type="file"]),
+  select,
+  textarea {
+    width: 100%;
+    padding: 0.85rem 1rem;
+    border-radius: var(--radius-sm);
+    border: 1.5px solid var(--color-border-strong);
+    background: var(--color-white);
+    color: var(--color-ink);
+    min-height: 52px;
+  }
+
+  /* The real file input stays visually hidden (see .visually-hidden in
+     global.css) — it must never regain width/height from the generic
+     input styling above, or it silently causes horizontal overflow. */
+  input[type="file"] {
+    width: 1px;
+    height: 1px;
+  }
+
+  textarea {
+    min-height: 110px;
+    resize: vertical;
+  }
+
+  input:focus,
+  select:focus,
+  textarea:focus {
+    border-color: var(--color-green);
+  }
+
+  input:invalid[data-touched="true"],
+  select:invalid[data-touched="true"] {
+    border-color: #b3413a;
+  }
+
+  .photo-upload-dropzone {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: var(--space-2);
+    padding: var(--space-6) var(--space-4);
+    border: 2px dashed var(--color-border-strong);
+    border-radius: var(--radius-md);
+    background: var(--color-bg-alt);
+    color: var(--color-green);
+    cursor: pointer;
+    transition: border-color var(--transition-fast), background var(--transition-fast);
+  }
+
+  .photo-upload-dropzone:hover,
+  .photo-upload-dropzone:focus-within {
+    border-color: var(--color-gold);
+    background: var(--color-gold-tint);
+  }
+
+  .photo-upload-title {
+    font-weight: var(--fw-bold);
+    color: var(--color-ink);
+  }
+
+  .photo-upload-hint {
+    font-size: var(--fs-xs);
+    color: var(--color-body-light);
+  }
+
+  .photo-previews {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(84px, 1fr));
+    gap: var(--space-3);
+    margin-top: var(--space-4);
+  }
+
+  /* .photo-preview and its children are created client-side by the script
+     below (document.createElement), so they never receive Astro's scoped
+     data-astro-cid attribute — these rules must stay :global() or they
+     silently never match. */
+  :global(.photo-preview) {
+    position: relative;
+    aspect-ratio: 1;
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+  }
+
+  :global(.photo-preview img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  :global(.photo-preview button) {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: rgba(22, 24, 26, 0.75);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+  }
+
+  .field-error {
+    font-size: var(--fs-xs);
+  }
+
+  .form-reassurance {
+    text-align: center;
+    font-size: var(--fs-xs);
+    color: var(--color-body-light);
+  }
+
+  .form-status {
+    border-radius: var(--radius-sm);
+    padding: var(--space-4);
+    font-size: var(--fs-sm);
+    background: var(--color-bg-alt);
+    border: 1px solid var(--color-border);
+  }
+
+  .form-status.is-error {
+    background: #fbf0ee;
+    border-color: #e3c3bd;
+    color: #7a2e26;
+  }
+</style>
+
+<script>
+  import { submitEstimationRequest, type EstimationPayload } from "../lib/estimationService";
+  import { business } from "../data/business";
+
+  const MAX_FILES = 8;
+  const MAX_SIZE_MB = 15;
+
+  const form = document.getElementById("estimation-form") as HTMLFormElement | null;
+  const photoInput = document.getElementById("ef-photos") as HTMLInputElement | null;
+  const previewList = document.getElementById("ef-photo-previews") as HTMLUListElement | null;
+  const photoError = document.getElementById("ef-photos-error") as HTMLParagraphElement | null;
+  const statusBox = document.getElementById("ef-status") as HTMLDivElement | null;
+  const submitBtn = document.getElementById("ef-submit") as HTMLButtonElement | null;
+
+  let selectedFiles: File[] = [];
+
+  function renderPreviews() {
+    if (!previewList) return;
+    previewList.innerHTML = "";
+    if (selectedFiles.length === 0) {
+      previewList.hidden = true;
+      return;
+    }
+    previewList.hidden = false;
+    selectedFiles.forEach((file, index) => {
+      const li = document.createElement("li");
+      li.className = "photo-preview";
+      const img = document.createElement("img");
+      img.src = URL.createObjectURL(file);
+      img.alt = "";
+      img.onload = () => URL.revokeObjectURL(img.src);
+      const removeBtn = document.createElement("button");
+      removeBtn.type = "button";
+      removeBtn.setAttribute("aria-label", `Retirer la photo ${index + 1}`);
+      removeBtn.textContent = "×";
+      removeBtn.addEventListener("click", () => {
+        selectedFiles.splice(index, 1);
+        renderPreviews();
+      });
+      li.append(img, removeBtn);
+      previewList.appendChild(li);
+    });
+  }
+
+  photoInput?.addEventListener("change", () => {
+    if (!photoInput.files) return;
+    const incoming = Array.from(photoInput.files);
+    const combined = [...selectedFiles, ...incoming];
+
+    if (photoError) {
+      photoError.hidden = true;
+      photoError.textContent = "";
+    }
+
+    const tooBig = combined.find((f) => f.size > MAX_SIZE_MB * 1024 * 1024);
+    if (tooBig && photoError) {
+      photoError.hidden = false;
+      photoError.textContent = `"${tooBig.name}" dépasse ${MAX_SIZE_MB } Mo. Choisissez une image plus légère.`;
+    }
+
+    selectedFiles = combined
+      .filter((f) => f.size <= MAX_SIZE_MB * 1024 * 1024)
+      .slice(0, MAX_FILES);
+
+    if (combined.length > MAX_FILES && photoError) {
+      photoError.hidden = false;
+      photoError.textContent = `Vous pouvez joindre au maximum ${MAX_FILES} photos.`;
+    }
+
+    photoInput.value = "";
+    renderPreviews();
+  });
+
+  form?.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    if (!form.checkValidity()) {
+      form.querySelectorAll("input, select").forEach((el) => el.setAttribute("data-touched", "true"));
+      form.reportValidity();
+      return;
+    }
+
+    const data = new FormData(form);
+    if (data.get("botcheck")) return; // honeypot tripped — silently drop
+    const payload: EstimationPayload = {
+      name: String(data.get("name") ?? ""),
+      phone: String(data.get("phone") ?? ""),
+      email: String(data.get("email") ?? ""),
+      objectType: String(data.get("objectType") ?? ""),
+      description: String(data.get("description") ?? ""),
+      photos: selectedFiles,
+    };
+
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Envoi en cours...";
+    }
+
+    const result = await submitEstimationRequest(payload);
+
+    if (submitBtn) {
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = "";
+      submitBtn.textContent = "Envoyer ma demande d'estimation";
+    }
+
+    if (statusBox) {
+      statusBox.hidden = false;
+      if (result.ok) {
+        statusBox.classList.remove("is-error");
+        statusBox.textContent =
+          "Merci, votre demande a bien été envoyée. Nous revenons vers vous rapidement.";
+        form.reset();
+        selectedFiles = [];
+        renderPreviews();
+      } else {
+        statusBox.classList.add("is-error");
+        const contactHint = business.streetAddress
+          ? `au ${business.streetAddress}, ${business.postalCode} ${business.city} (${business.openingHoursDisplay})`
+          : "via la page Contact";
+        statusBox.textContent = `La connexion de ce formulaire n'est pas encore activée. En attendant, contactez-nous directement ${contactHint} avec vos photos.`;
+      }
+    }
+  });
+</script>

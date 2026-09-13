@@ -1,0 +1,110 @@
+---
+const steps = [
+  {
+    n: 1,
+    title: "Envoyez vos photos",
+    text: "Prenez simplement quelques photos de votre objet depuis votre téléphone.",
+  },
+  {
+    n: 2,
+    title: "Première analyse",
+    text: "Nous examinons les informations et les photos transmises.",
+  },
+  {
+    n: 3,
+    title: "Estimation & valorisation",
+    text: "Nous vous expliquons clairement le potentiel et les différentes possibilités de valorisation.",
+  },
+  {
+    n: 4,
+    title: "La meilleure seconde vie",
+    text: "Nous vous accompagnons vers la solution la plus adaptée à votre objet et à votre situation.",
+  },
+];
+---
+
+<div class="process-grid">
+  {steps.map((step, index) => (
+    <div class="process-step">
+      <div class="process-badge-wrap">
+        <span class="process-badge">{step.n}</span>
+        {index < steps.length - 1 && <span class="process-line" aria-hidden="true"></span>}
+      </div>
+      <h3>{step.title}</h3>
+      <p>{step.text}</p>
+    </div>
+  ))}
+</div>
+
+<style>
+  .process-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-8);
+  }
+
+  @media (min-width: 768px) {
+    .process-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: var(--space-5);
+    }
+  }
+
+  .process-step {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .process-badge-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin-bottom: var(--space-5);
+  }
+
+  .process-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: var(--color-gold);
+    color: var(--color-green-900);
+    font-size: var(--fs-lg);
+    font-weight: var(--fw-extrabold);
+    position: relative;
+    z-index: 1;
+    box-shadow: var(--shadow-gold);
+  }
+
+  .process-line {
+    display: none;
+  }
+
+  @media (min-width: 768px) {
+    .process-line {
+      display: block;
+      position: absolute;
+      top: 50%;
+      left: calc(50% + 36px);
+      width: calc(100% - 36px);
+      border-top: 2px dashed var(--color-gold-line);
+      transform: translateY(-1px);
+    }
+  }
+
+  .process-step h3 {
+    margin-bottom: var(--space-2);
+  }
+
+  .process-step p {
+    font-size: var(--fs-sm);
+    color: var(--color-body);
+    max-width: 26ch;
+  }
+</style>

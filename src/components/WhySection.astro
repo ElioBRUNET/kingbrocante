@@ -1,0 +1,106 @@
+---
+import { Image } from "astro:assets";
+import whyImage from "../assets/images/pourquoi-expertise.jpg";
+
+const features = [
+  {
+    title: "Expertise & regard professionnel",
+    text: "Un œil attentif porté sur vos objets, leur histoire et leurs particularités.",
+  },
+  {
+    title: "Estimation transparente",
+    text: "Une démarche claire, expliquée simplement, sans jargon inutile.",
+  },
+  {
+    title: "Service local à Genève",
+    text: "Une présence locale, proche de vous et de vos objets.",
+  },
+  {
+    title: "Valorisation & seconde vie",
+    text: "Nous vous aidons à donner à chaque objet la suite la plus adaptée.",
+  },
+];
+---
+
+<div class="why-grid">
+  <div class="why-media">
+    <Image
+      src={whyImage}
+      alt="Restauratrice examinant avec soin un document ancien avant estimation"
+      widths={[400, 600, 800]}
+      sizes="(min-width: 1024px) 460px, 90vw"
+      width={800}
+      height={960}
+      loading="lazy"
+      class="why-image"
+    />
+  </div>
+  <div class="why-cards">
+    {features.map((feature) => (
+      <div class="why-card">
+        <h3>{feature.title}</h3>
+        <p>{feature.text}</p>
+      </div>
+    ))}
+  </div>
+</div>
+
+<style>
+  .why-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-6);
+  }
+
+  @media (min-width: 1024px) {
+    .why-grid {
+      grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+      gap: var(--space-8);
+      align-items: stretch;
+    }
+  }
+
+  .why-media {
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+  }
+
+  .why-image {
+    width: 100%;
+    height: 100%;
+    max-height: 560px;
+    object-fit: cover;
+    object-position: center 25%;
+  }
+
+  .why-cards {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-4);
+  }
+
+  @media (min-width: 640px) {
+    .why-cards {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    }
+  }
+
+  .why-card {
+    background: var(--color-white);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-5);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .why-card h3 {
+    font-size: var(--fs-md);
+    margin-bottom: var(--space-2);
+    color: var(--color-green);
+  }
+
+  .why-card p {
+    font-size: var(--fs-sm);
+  }
+</style>

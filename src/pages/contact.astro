@@ -1,0 +1,126 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PageIntro from "../components/PageIntro.astro";
+import EstimationForm from "../components/EstimationForm.astro";
+import LocalAreas from "../components/LocalAreas.astro";
+import Icon from "../components/Icon.astro";
+import { business } from "../data/business";
+import { breadcrumbSchema } from "../lib/schema";
+
+const crumbs = [
+  { name: "Accueil", path: "/" },
+  { name: "Contact", path: "/contact" },
+];
+---
+
+<BaseLayout
+  title="Contact — King Brocante à Genève"
+  description="Contactez King Brocante à Genève pour faire estimer un objet : mobilier, bijoux, montres, argenterie, tableaux et objets anciens. Envoyez vos photos directement depuis votre téléphone."
+  path="/contact"
+  structuredData={breadcrumbSchema(crumbs)}
+>
+  <PageIntro
+    eyebrow="Nous contacter"
+    title="Contact"
+    lead="La façon la plus simple de nous contacter est d'envoyer votre demande d'estimation ci-dessous, avec quelques photos de votre objet."
+    crumbs={crumbs}
+  />
+
+  <section class="section contact-section">
+    <div class="container contact-grid">
+      <div class="contact-form-col">
+        <EstimationForm compact />
+      </div>
+
+      <aside class="contact-info-col">
+        <div class="contact-info-card">
+          <h2>Nos coordonnées</h2>
+          <ul>
+            {business.phone && (
+              <li>
+                <Icon name="phone" size={20} />
+                <span>{business.phone}</span>
+              </li>
+            )}
+            {business.email && (
+              <li>
+                <Icon name="mail" size={20} />
+                <span>{business.email}</span>
+              </li>
+            )}
+            {business.streetAddress && (
+              <li>
+                <Icon name="map-pin" size={20} />
+                <span>{business.streetAddress}, {business.postalCode} {business.city}</span>
+              </li>
+            )}
+            {business.openingHoursDisplay && (
+              <li>
+                <Icon name="clock" size={20} />
+                <span>{business.openingHoursDisplay}</span>
+              </li>
+            )}
+          </ul>
+        </div>
+
+        <div class="contact-info-card">
+          <h2>Zone d'intervention</h2>
+          <LocalAreas />
+        </div>
+      </aside>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .contact-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-8);
+  }
+
+  @media (min-width: 1024px) {
+    .contact-grid {
+      grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.9fr);
+      align-items: start;
+    }
+  }
+
+  .contact-info-col {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+  }
+
+  .contact-info-card {
+    background: var(--color-white);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-6);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .contact-info-card h2 {
+    font-size: var(--fs-md);
+    margin-bottom: var(--space-4);
+  }
+
+  .contact-info-card ul {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .contact-info-card li {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    font-size: var(--fs-sm);
+    color: var(--color-body);
+  }
+
+  .contact-info-card li :global(svg) {
+    color: var(--color-gold-700);
+    flex-shrink: 0;
+  }
+</style>

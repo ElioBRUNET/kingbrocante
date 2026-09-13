@@ -1,0 +1,48 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+  title="Page introuvable"
+  description="Cette page n'existe pas ou plus."
+  path="/404"
+  noindex
+>
+  <section class="section not-found">
+    <div class="container">
+      <p class="eyebrow">Erreur 404</p>
+      <h1>Cette page est introuvable</h1>
+      <p class="text-lead">
+        La page que vous cherchez n'existe pas ou a été déplacée.
+      </p>
+      <div class="not-found-actions">
+        <a href="/" class="btn btn-primary">Retour à l'accueil</a>
+        <a href="/contact#estimation" class="btn btn-outline">Faire estimer un objet</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .not-found {
+    text-align: center;
+    padding-block: var(--space-12);
+  }
+
+  .not-found h1 {
+    margin-block: var(--space-3) var(--space-4);
+  }
+
+  .not-found .text-lead {
+    max-width: 50ch;
+    margin-inline: auto;
+    margin-bottom: var(--space-6);
+  }
+
+  .not-found-actions {
+    display: flex;
+    gap: var(--space-4);
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+</style>

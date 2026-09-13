@@ -1,0 +1,128 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Hero from "../components/Hero.astro";
+import TrustBar from "../components/TrustBar.astro";
+import SectionHeading from "../components/SectionHeading.astro";
+import ObjectGrid from "../components/ObjectGrid.astro";
+import ProcessSection from "../components/ProcessSection.astro";
+import EstimationForm from "../components/EstimationForm.astro";
+import WhySection from "../components/WhySection.astro";
+import ImageTextSection from "../components/ImageTextSection.astro";
+import KingNetworkBanner from "../components/KingNetworkBanner.astro";
+import LocalAreas from "../components/LocalAreas.astro";
+import FAQAccordion from "../components/FAQAccordion.astro";
+import CTASection from "../components/CTASection.astro";
+import { homeCategories } from "../data/categories";
+import { faqItems, publishedFaqItems } from "../data/faq";
+import { business } from "../data/business";
+import { faqSchema } from "../lib/schema";
+import debarrasImage from "../assets/images/debarras-tri.jpg";
+---
+
+<BaseLayout
+  title="King Brocante — Estimation & valorisation d'objets à Genève"
+  description="King Brocante accompagne l'estimation, la valorisation et la seconde vie de vos objets à Genève : mobilier, bijoux, montres, argenterie, tableaux et objets anciens. Envoyez vos photos en quelques clics."
+  path="/"
+  structuredData={faqSchema(faqItems)}
+>
+  <Hero />
+  <TrustBar />
+
+  <section class="section" aria-labelledby="categories-heading">
+    <div class="container">
+      <SectionHeading
+        eyebrow="Nos domaines d'estimation"
+        title="Quels objets souhaitez-vous faire <em>estimer</em> ?"
+        lead="Un aperçu des catégories que nous accompagnons le plus souvent. Un doute sur votre objet ? Envoyez-nous simplement une photo."
+      />
+      <ObjectGrid categories={homeCategories} />
+      <div class="categories-cta">
+        <a href="/objets" class="btn btn-outline">Voir toutes les catégories</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-alt" aria-labelledby="process-heading">
+    <div class="container">
+      <SectionHeading
+        eyebrow="Notre méthode"
+        title="Faire estimer un objet en <em>4 étapes</em>"
+        lead="Une démarche simple, pensée pour être faite depuis votre téléphone."
+        align="center"
+      />
+      <ProcessSection />
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="estimation-heading">
+    <div class="container">
+      <EstimationForm />
+    </div>
+  </section>
+
+  <section class="section section-alt" aria-labelledby="why-heading">
+    <div class="container">
+      <SectionHeading
+        eyebrow="King Brocante"
+        title="Pourquoi faire confiance à <em>King Brocante</em> ?"
+      />
+      <WhySection />
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="debarras-heading">
+    <div class="container">
+      <ImageTextSection
+        eyebrow="Débarras & récupération"
+        title="Avant un débarras, identifions ce qui mérite une seconde vie"
+        paragraphs={[
+          "Appartement, maison, cave ou succession : avant que des objets ne soient évacués, nous pouvons vous aider à repérer ce qui mérite d'être préservé, estimé ou valorisé.",
+          "Notre regard s'ajoute à votre projet de débarras pour que rien de potentiellement précieux ne soit écarté trop vite.",
+        ]}
+        ctaLabel="Parler de mon débarras"
+        ctaHref="/debarras-recuperation"
+        image={debarrasImage}
+        imageAlt="Tri d'objets et d'affaires personnelles avant un débarras"
+      />
+    </div>
+  </section>
+
+  <KingNetworkBanner />
+
+  <section class="section" aria-labelledby="local-heading">
+    <div class="container">
+      <SectionHeading
+        eyebrow="Zone d'intervention"
+        title={`King Brocante à ${business.city} & alentours`}
+        lead="Nous accompagnons des particuliers dans plusieurs communes genevoises."
+      />
+      <LocalAreas />
+    </div>
+  </section>
+
+  <section class="section section-alt" aria-labelledby="faq-heading">
+    <div class="container container-narrow">
+      <SectionHeading eyebrow="Questions fréquentes" title="Vos questions, nos réponses" />
+      <FAQAccordion items={publishedFaqItems} />
+    </div>
+  </section>
+
+  <CTASection
+    title="Un objet à faire estimer à Genève ?"
+    text="Envoyez-nous quelques photos et informations. King Brocante vous accompagne simplement dans l'estimation et la valorisation de vos biens."
+    ctaLabel="Faire estimer mon objet →"
+    ctaHref="/contact#estimation"
+  />
+</BaseLayout>
+
+<style>
+  .categories-cta {
+    display: flex;
+    justify-content: center;
+    margin-top: var(--space-8);
+  }
+
+  .container-narrow {
+    max-width: 860px;
+  }
+</style>

@@ -1,0 +1,169 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PageIntro from "../components/PageIntro.astro";
+import SectionHeading from "../components/SectionHeading.astro";
+import ImageTextSection from "../components/ImageTextSection.astro";
+import PillarList from "../components/PillarList.astro";
+import FAQAccordion from "../components/FAQAccordion.astro";
+import CTASection from "../components/CTASection.astro";
+import { business } from "../data/business";
+import { publishedFaqItems } from "../data/faq";
+import { breadcrumbSchema, serviceSchema } from "../lib/schema";
+import debarrasTri from "../assets/images/debarras-tri.jpg";
+import debarrasKitchen from "../assets/images/debarras-kitchen.jpg";
+
+const crumbs = [
+  { name: "Accueil", path: "/" },
+  { name: "Débarras & récupération", path: "/debarras-recuperation" },
+];
+
+const pillars = [
+  {
+    icon: "compass" as const,
+    title: "Tri",
+    text: "Identifier ce qui mérite une attention particulière avant l'évacuation.",
+  },
+  {
+    icon: "sparkles" as const,
+    title: "Valorisation",
+    text: "Comprendre le potentiel des objets qui le méritent.",
+  },
+  {
+    icon: "upload" as const,
+    title: "Récupération",
+    text: "Organiser la reprise des objets identifiés comme valorisables.",
+  },
+  {
+    icon: "shield" as const,
+    title: "Accompagnement",
+    text: "Un interlocuteur unique, du premier tri jusqu'à la seconde vie de l'objet.",
+  },
+];
+
+const debarrasFaq = publishedFaqItems.filter((item) =>
+  [
+    "Pouvez-vous intervenir lors d'une succession ?",
+    "Intervenez-vous à domicile ?",
+    "Que faire si je ne connais rien sur l'objet ?",
+  ].includes(item.question)
+);
+---
+
+<BaseLayout
+  title="Débarras & récupération d'objets à Genève"
+  description="Avant un débarras d'appartement, de cave ou de succession à Genève, King Brocante vous aide à identifier les objets qui méritent d'être estimés, valorisés ou réutilisés."
+  path="/debarras-recuperation"
+  structuredData={[
+    breadcrumbSchema(crumbs),
+    serviceSchema({
+      name: "Débarras & récupération",
+      description:
+        "Tri, identification et valorisation d'objets avant un débarras d'appartement, de cave ou de succession à Genève.",
+      path: "/debarras-recuperation",
+    }),
+  ]}
+>
+  <PageIntro
+    eyebrow="Nos services"
+    title="Débarras & récupération"
+    lead="Un débarras n'est pas qu'une évacuation : c'est aussi l'occasion d'identifier ce qui mérite d'être préservé, estimé ou réutilisé."
+    crumbs={crumbs}
+  />
+
+  <section class="section">
+    <div class="container container-prose">
+      <SectionHeading
+        eyebrow="Notre approche"
+        title="Trier avant de débarrasser"
+      />
+      <p class="text-lead">
+        Un simple débarras évacue tout, sans distinction. Notre approche consiste à
+        regarder ce qu'un logement, une cave ou une succession contiennent avant que
+        les objets ne partent, pour repérer ce qui a une valeur ou un intérêt à
+        préserver.
+      </p>
+      <p class="text-lead">
+        Cette étape de tri s'ajoute à votre projet de débarras — elle ne le remplace
+        pas. Pour le nettoyage et l'évacuation à proprement parler, notre partenaire
+        <a href={business.kingCleaningUrl} target="_blank" rel="noopener"> King Cleaning</a> intervient
+        également à Genève.
+      </p>
+    </div>
+  </section>
+
+  <section class="section section-alt">
+    <div class="container">
+      <ImageTextSection
+        eyebrow="Avant l'évacuation"
+        title="Un premier regard sur ce que contient le logement"
+        paragraphs={[
+          "Meubles, cartons, objets familiaux : nous prenons le temps d'observer ce qui pourrait avoir une valeur, avant qu'il ne soit trop tard.",
+          "Cette étape est particulièrement utile dans le cadre d'une succession, où de nombreux objets changent de main rapidement.",
+        ]}
+        image={debarrasTri}
+        imageAlt="Tri d'affaires personnelles avant un débarras"
+      />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <SectionHeading
+        eyebrow="Notre démarche"
+        title="Tri, valorisation, récupération, accompagnement"
+      />
+      <PillarList pillars={pillars} />
+    </div>
+  </section>
+
+  <section class="section section-alt">
+    <div class="container">
+      <ImageTextSection
+        eyebrow="Sur place"
+        title="Un accompagnement concret, au rythme de votre débarras"
+        paragraphs={[
+          "Nous nous adaptons à votre calendrier et à l'ampleur du débarras, qu'il s'agisse d'un appartement entier ou de quelques pièces ciblées.",
+        ]}
+        ctaLabel="Parler de mon débarras"
+        ctaHref="/contact#estimation"
+        image={debarrasKitchen}
+        imageAlt="Tri d'objets dans une cuisine avant un débarras"
+        reverse
+      />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container container-narrow">
+      <SectionHeading eyebrow="Questions fréquentes" title="Vos questions, nos réponses" />
+      <FAQAccordion items={debarrasFaq} />
+    </div>
+  </section>
+
+  <CTASection
+    title="Un débarras en vue à Genève ?"
+    text="Parlez-nous de votre situation : nous vous aidons à identifier ce qui mérite d'être valorisé avant l'évacuation."
+    ctaLabel="Parler de mon débarras →"
+    ctaHref="/contact#estimation"
+  />
+</BaseLayout>
+
+<style>
+  .container-prose {
+    max-width: 760px;
+  }
+
+  .container-prose .text-lead {
+    margin-bottom: var(--space-4);
+  }
+
+  .container-prose a {
+    color: var(--color-green);
+    font-weight: var(--fw-semibold);
+    text-decoration: underline;
+  }
+
+  .container-narrow {
+    max-width: 860px;
+  }
+</style>

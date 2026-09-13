@@ -1,0 +1,44 @@
+---
+type Props = {
+  eyebrow?: string;
+  title: string;
+  lead?: string;
+  align?: "left" | "center";
+  as?: "h1" | "h2";
+};
+
+const { eyebrow, title, lead, align = "left", as = "h2" } = Astro.props;
+const Tag = as;
+---
+
+<div class={`section-heading align-${align}`}>
+  {eyebrow && <p class="eyebrow">{eyebrow}</p>}
+  <Tag set:html={title} />
+  {lead && <p class="text-lead">{lead}</p>}
+</div>
+
+<style>
+  .section-heading {
+    max-width: 46rem;
+    margin-bottom: var(--space-8);
+  }
+
+  .section-heading.align-center {
+    margin-inline: auto;
+    text-align: center;
+  }
+
+  .section-heading .eyebrow {
+    margin-bottom: var(--space-3);
+  }
+
+  .section-heading h1,
+  .section-heading h2 {
+    margin-bottom: var(--space-4);
+  }
+
+  .section-heading :global(em) {
+    font-style: normal;
+    color: var(--color-gold-700);
+  }
+</style>

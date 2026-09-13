@@ -1,0 +1,79 @@
+---
+import Icon from "./Icon.astro";
+
+type Pillar = {
+  icon: Parameters<typeof Icon>[0]["name"];
+  title: string;
+  text: string;
+};
+
+type Props = {
+  pillars: Pillar[];
+  columns?: 2 | 4;
+};
+
+const { pillars, columns = 4 } = Astro.props;
+---
+
+<div class={`pillar-list cols-${columns}`}>
+  {pillars.map((pillar) => (
+    <div class="pillar">
+      <div class="pillar-icon">
+        <Icon name={pillar.icon} size={22} />
+      </div>
+      <h3>{pillar.title}</h3>
+      <p>{pillar.text}</p>
+    </div>
+  ))}
+</div>
+
+<style>
+  .pillar-list {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-5);
+  }
+
+  @media (min-width: 640px) {
+    .pillar-list.cols-4 {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    }
+    .pillar-list.cols-2 {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .pillar-list.cols-4 {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+
+  .pillar {
+    background: var(--color-white);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-5);
+  }
+
+  .pillar-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--color-gold-tint);
+    color: var(--color-gold-900);
+    margin-bottom: var(--space-4);
+  }
+
+  .pillar h3 {
+    font-size: var(--fs-md);
+    margin-bottom: var(--space-2);
+  }
+
+  .pillar p {
+    font-size: var(--fs-sm);
+  }
+</style>

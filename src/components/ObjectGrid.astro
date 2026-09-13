@@ -1,0 +1,138 @@
+---
+import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
+import type { ObjectCategory } from "../data/categories";
+
+type Props = {
+  categories: ObjectCategory[];
+  ctaLabel?: string;
+};
+
+const { categories, ctaLabel } = Astro.props;
+
+const images = import.meta.glob<{ default: ImageMetadata }>(
+  "/src/assets/images/*.{jpg,jpeg,png}",
+  { eager: true }
+);
+
+function resolveImage(filename?: string) {
+  if (!filename) return null;
+  const entry = Object.entries(images).find(([path]) => path.endsWith(`/${filename}`));
+  return entry?.[1]?.default ?? null;
+}
+---
+
+<div class="object-grid">
+  {categories.map((category) => {
+    const img = resolveImage(category.image);
+    return (
+      <a href="/contact#estimation" class="object-card">
+        <div class="object-card-media">
+          {img && (
+            <Image
+              src={img}
+              alt={category.alt ?? ""}
+              widths={[320, 480, 640]}
+              sizes="(min-width: 1024px) 280px, (min-width: 640px) 45vw, 90vw"
+              width={640}
+              height={480}
+              loading="lazy"
+            />
+          )}
+        </div>
+        <div class="object-card-body">
+          <h3>{category.title}</h3>
+          <p>{category.description}</p>
+          {ctaLabel && <span class="object-card-cta">{ctaLabel} →</span>}
+        </div>
+      </a>
+    );
+  })}
+</div>
+
+<style>
+  .object-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-5);
+  }
+
+  @media (min-width: 768px) {
+    .object-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .object-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+
+  .object-card {
+    display: block;
+    background: var(--color-white);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+    box-shadow: var(--shadow-sm);
+    transition: transform var(--transition-base), box-shadow var(--transition-base);
+  }
+
+  .object-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+  }
+
+  .object-card-media {
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    background: var(--color-bg-tint);
+  }
+
+  .object-card-media :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--transition-base);
+  }
+
+  .object-card:hover .object-card-media :global(img) {
+    transform: scale(1.05);
+  }
+
+  .object-card-body {
+    padding: var(--space-4);
+  }
+
+  .object-card-body h3 {
+    font-size: var(--fs-sm);
+    margin-bottom: var(--space-1);
+  }
+
+  @media (min-width: 768px) {
+    .object-card-body h3 {
+      font-size: var(--fs-md);
+    }
+  }
+
+  .object-card-body p {
+    font-size: var(--fs-xs);
+    color: var(--color-body-light);
+    display: none;
+  }
+
+  @media (min-width: 640px) {
+    .object-card-body p {
+      display: block;
+    }
+  }
+
+  .object-card-cta {
+    display: inline-block;
+    margin-top: var(--space-3);
+    font-size: var(--fs-xs);
+    font-weight: var(--fw-bold);
+    color: var(--color-green);
+  }
+</style>

@@ -1,0 +1,142 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PageIntro from "../components/PageIntro.astro";
+import SectionHeading from "../components/SectionHeading.astro";
+import ObjectGrid from "../components/ObjectGrid.astro";
+import CTASection from "../components/CTASection.astro";
+import { Image } from "astro:assets";
+import { homeCategories, extendedCategories } from "../data/categories";
+import { breadcrumbSchema } from "../lib/schema";
+import objetsIntro from "../assets/images/objets-intro.jpg";
+import tableauxSecondary from "../assets/images/tableaux-secondary.jpg";
+
+const crumbs = [
+  { name: "Accueil", path: "/" },
+  { name: "Objets", path: "/objets" },
+];
+---
+
+<BaseLayout
+  title="Objets & catégories estimées à Genève"
+  description="Mobilier ancien, bijoux, montres, argenterie, tableaux, porcelaine, objets de collection : découvrez les catégories d'objets que King Brocante accompagne à Genève."
+  path="/objets"
+  structuredData={breadcrumbSchema(crumbs)}
+>
+  <PageIntro
+    eyebrow="Le catalogue"
+    title="Quels objets pouvons-nous estimer ?"
+    lead="Un aperçu des familles d'objets les plus fréquemment estimées. En cas de doute, la meilleure façon de savoir reste de nous envoyer une photo."
+    crumbs={crumbs}
+  />
+
+  <section class="objets-gallery">
+    <div class="container objets-gallery-grid">
+      <Image
+        src={objetsIntro}
+        alt="Objets décoratifs et de collection présentés avec soin"
+        widths={[400, 600]}
+        sizes="(min-width: 768px) 46vw, 90vw"
+        width={600}
+        height={500}
+        loading="eager"
+      />
+      <Image
+        src={tableauxSecondary}
+        alt="Tableaux et cadres anciens rassemblés dans un intérieur"
+        widths={[400, 600]}
+        sizes="(min-width: 768px) 46vw, 90vw"
+        width={600}
+        height={500}
+        loading="lazy"
+      />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <SectionHeading eyebrow="Catégories principales" title="Les objets que nous accompagnons le plus souvent" />
+      <ObjectGrid categories={homeCategories} ctaLabel="Faire estimer" />
+    </div>
+  </section>
+
+  <section class="section section-alt">
+    <div class="container">
+      <SectionHeading
+        eyebrow="Et aussi"
+        title="D'autres catégories peuvent être concernées"
+        lead="Ces familles d'objets peuvent également faire l'objet d'une estimation, au cas par cas."
+      />
+      <ul class="extended-list">
+        {extendedCategories.map((cat) => (
+          <li>{cat}</li>
+        ))}
+      </ul>
+      <p class="extended-note">
+        Vous ne trouvez pas votre objet dans cette liste ? Envoyez-nous une photo,
+        nous vous indiquerons si nous pouvons vous aider.
+      </p>
+    </div>
+  </section>
+
+  <CTASection
+    title="Un objet à faire estimer ?"
+    text="Quelques photos suffisent pour démarrer une première analyse avec King Brocante."
+    ctaLabel="Faire estimer mon objet →"
+    ctaHref="/contact#estimation"
+  />
+</BaseLayout>
+
+<style>
+  .objets-gallery {
+    padding-top: var(--space-2);
+  }
+
+  .objets-gallery-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-4);
+  }
+
+  @media (min-width: 768px) {
+    .objets-gallery-grid {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    }
+  }
+
+  .objets-gallery-grid :global(img) {
+    width: 100%;
+    height: 280px;
+    object-fit: cover;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+  }
+
+  @media (min-width: 768px) {
+    .objets-gallery-grid :global(img) {
+      height: 340px;
+    }
+  }
+
+  .extended-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    margin-bottom: var(--space-6);
+  }
+
+  .extended-list li {
+    background: var(--color-white);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-pill);
+    padding: 0.6rem 1.2rem;
+    font-size: var(--fs-sm);
+    font-weight: var(--fw-semibold);
+    color: var(--color-ink);
+  }
+
+  .extended-note {
+    color: var(--color-body-light);
+    font-size: var(--fs-sm);
+    max-width: 60ch;
+  }
+</style>
